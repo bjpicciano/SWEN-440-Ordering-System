@@ -31,6 +31,11 @@ development tools.  Development work was done in both Ubuntu and Windows 10.
 However, the customer has explicitly asked that the final
 product run on Windows 10.
 
+The orderSys.properties and product.db file's changes are not tracked in git because of:  
+```git update-index --skip-worktree <file> ```  
+Use this command to track again  
+```git update-index --no-skip-worktree <file>```
+
 ### Coding Style
 The management team _fired_ the last set of architects and developers because they could
 not agree on architectural direction or coding styles and conventions.  This
