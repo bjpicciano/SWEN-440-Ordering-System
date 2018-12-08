@@ -25,11 +25,9 @@ architecture itself, and how the chosen architecture addresses the
 drivers.  
    
 ## Development
-The **Online Ordering System** was developed using the Java language.  The
-developers used IntelliJ IDEA, atom, and vsCode as their principle
-development tools.  Development work was done in both Ubuntu and Windows 10.
-However, the customer has explicitly asked that the final
-product run on Windows 10.
+The **Online Ordering System** was developed using the Java language. The
+developers used the IntelliJ IDEA IDE, and DB Browser for SQLite for their principle
+development tools.
 
 The orderSys.properties and product.db file's changes are not tracked in git because of:  
 ```git update-index --skip-worktree <file> ```  
@@ -38,7 +36,7 @@ Use this command to track again
 
 ### Coding Style
 The management team _fired_ the last set of architects and developers because they could
-not agree on architectural direction or coding styles and conventions.  This
+not agree on architectural direction or coding styles and conventions. This
 inability has led to a slightly brittle system that is at risk of falling behind its
 primary competitor, that South American company, Amazon.   
 
