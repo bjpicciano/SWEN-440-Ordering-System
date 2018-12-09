@@ -48,20 +48,24 @@ public class menutest
         Connection conn = connect();
         selectTest(conn);
 
+        System.setProperty("fileSystemRoot", "./orderSys");
+        System.out.println("Hello");
+        menumgr mgr = new menumgr();
+        int currentLevel = 0;
+        boolean done = false;
+        do {
+            done = mgr.loadLevel(currentLevel);
+        } while (!done);
+
+        System.out.println("Thank you for shopping at Hippolyta.com!");
+
+        // Close DB connection
         try {
-            System.getProperties().load(new FileInputStream("orderSys.properties"));
-            System.out.println("Hello");
-            menumgr mgr = new menumgr();
-            int currentLevel = 0;
-            boolean done = false;
-            do {
-                done = mgr.loadLevel(currentLevel);
-            } while (!done);
-
-            System.out.println("Thank you for shopping at Hippolyta.com!");
-
-        } catch(IOException e) {
-            System.err.println("orderSys.properties not found.");
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
