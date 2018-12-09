@@ -15,10 +15,10 @@ public class User {
     }
 
     public String getAccountType() {
-        return accountType;
+        return this.accountType;
     }
     public int getId() {
-        return id;
+        return this.id;
     }
 
     @Override

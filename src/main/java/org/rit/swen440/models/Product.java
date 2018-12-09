@@ -28,6 +28,10 @@ public class Product {
         return this.count;
     }
 
+    public int getSku() {
+        return this.sku;
+    }
+
     public float getPrice() {
         return this.price;
     }

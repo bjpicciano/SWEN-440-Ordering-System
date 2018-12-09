@@ -5,7 +5,9 @@ import org.rit.swen440.models.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -211,8 +213,25 @@ public class Controller {
     }
 
     public boolean createTransaction(User client, List<Product> products, int quantity) {
-        return false;
-        //TODO
+        String date_ordered = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        int client_id = client.getId();
+        try {
+            database.insertTransaction(date_ordered, null, null, client_id);
+            ResultSet rs = database.query("SELECT last_insert_rowid()");
+            int transaction_id = rs.getInt("id");
+            rs.close();
+            for(Product product : products ) {
+                boolean success = createTransactionProduct(transaction_id, product, quantity);
+                if(!success) {
+                    System.out.println("Error creating transaction product");
+                    return false;
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public Transaction getTransactionById(int id) {
@@ -245,9 +264,14 @@ public class Controller {
         return null;
     }
 
-    private boolean createTransactionProduct() {
-        return false;
-        //TODO
+    private boolean createTransactionProduct(int transaction_id, Product product, int quantity) {
+        try {
+            database.insertTransactionProduct(transaction_id, product.getSku(), product.getPrice(), quantity);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private List<TransactionProduct> getTransactionProductsByTransactionId(int transactionId) {
