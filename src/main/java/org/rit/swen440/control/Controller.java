@@ -44,8 +44,6 @@ public class Controller {
 
             String userType = getUserTypeById(id);
 
-            rs.close();
-
             return new User(id, email, userType);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -68,8 +66,6 @@ public class Controller {
 
             String userType = getUserTypeById(id);
 
-            rs.close();
-
             return new User(id, email, userType);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -86,7 +82,6 @@ public class Controller {
             );
 
             int userId = rs.getInt("user_id");
-            rs.close();
 
             return id == userId;
         } catch (SQLException e) {
@@ -114,13 +109,13 @@ public class Controller {
 
         try {
             ResultSet rs = database.query("SELECT name, description FROM category");
+
             while (rs.next()) {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
 
                 categories.add(new Category(name, description));
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -133,7 +128,6 @@ public class Controller {
             ResultSet rs = database.query("SELECT description FROM category WHERE name = '" + name + "'");
 
             String description = rs.getString("description");
-            rs.close();
 
             return new Category(name, description);
         } catch (SQLException e) {
@@ -162,7 +156,6 @@ public class Controller {
             float price = rs.getFloat("price");
             String categoryName = rs.getString("category_name");
             Category category = getCategoryByName(categoryName);
-            rs.close();
 
             return new Product(sku, count, name, description, price, category);
         } catch (SQLException e) {
@@ -203,8 +196,6 @@ public class Controller {
 
                 products.add(new Product(sku, count, name, description, price, category));
             }
-
-            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -238,7 +229,6 @@ public class Controller {
 
             int userId = rs.getInt("user_id");
             User user = getUserById(userId);
-            rs.close();
 
             return new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
         } catch (SQLException e) {
@@ -266,6 +256,7 @@ public class Controller {
                 "FROM transaction_product\n" +
                 "WHERE transaction_id = " + transactionId
             );
+
             while (rs.next()) {
                 int sku = rs.getInt("product_sku");
                 Product product = getProductBySKU(sku);
@@ -275,7 +266,6 @@ public class Controller {
 
                 transactionProducts.add(new TransactionProduct(product, purchasePrice, quantity));
             }
-            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
