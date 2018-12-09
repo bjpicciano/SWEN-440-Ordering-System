@@ -109,8 +109,8 @@ public class AuditManager {
             System.out.println(transactions);
         } else {
             System.out.println("No transactions found between specified dates.");
-            System.out.println();
         }
+        System.out.println();
 
         currentLevel = 0;
     }
