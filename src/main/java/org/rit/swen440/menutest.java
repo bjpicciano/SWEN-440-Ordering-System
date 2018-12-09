@@ -27,10 +27,9 @@ public class menutest
         System.setProperty("fileSystemRoot", "./orderSys");
         System.out.println("Hello");
         menumgr mgr = new menumgr();
-        int currentLevel = 0;
         boolean done = false;
         do {
-            done = mgr.loadLevel(currentLevel);
+            done = mgr.loadLevel();
         } while (!done);
 
         System.out.println("Thank you for shopping at Hippolyta.com!");
