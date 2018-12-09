@@ -2,6 +2,7 @@ package org.rit.swen440.control;
 
 import org.junit.Test;
 import org.rit.swen440.models.Category;
+import org.rit.swen440.models.Product;
 import org.rit.swen440.models.Transaction;
 import org.rit.swen440.models.User;
 
@@ -15,14 +16,16 @@ public class ControllerTest {
     @Test
     public void getTransactionsBetweenDates() {
         List<Transaction> transactions = controller.getTransactionsBetweenDates("2018-12-01", "2018-12-30");
-        if (transactions.isEmpty()) {
+        if (transactions.isEmpty())
             fail();
-        }
     }
 
     @Test
     public void getTopAndBottomSoldProducts() {
+        List<Product> products = controller.getTopAndBottomSoldProducts("2018-12");
 
+        if (products.size() > 2)
+            fail();
     }
 
     @Test
