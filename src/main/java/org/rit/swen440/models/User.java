@@ -14,6 +14,13 @@ public class User {
         this.accountType = accountType;
     }
 
+    public String getAccountType() {
+        return accountType;
+    }
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "User{" +

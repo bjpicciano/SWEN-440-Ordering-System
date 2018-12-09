@@ -52,9 +52,8 @@ public class MenuManager {
         m = new Menu();
         String password = m.getSelection();
 
-        //TODO User Login
-        System.out.println("Logging in as " + email + " with password " + password);
-        //user = controller.login(username, password);
+        user = controller.login(email, password);
+        //if (user.getAccountType())
 
         currentLevel = 0;
     }
