@@ -15,7 +15,7 @@ import java.util.Optional;
  * categories and products from information on the underlying file system.
  */
 public class Controller {
-    Database database;
+    private Database database;
 
     public Controller() {
         database = new Database();
@@ -148,7 +148,7 @@ public class Controller {
         return products;
     }
 
-    public boolean createTransaction(User client, List<Product> products) {
+    public boolean createTransaction(User client, List<Product> products, int quantity) {
         return false;
         //TODO
     }
@@ -183,7 +183,7 @@ public class Controller {
         return null;
     }
 
-    public boolean createTransactionProduct() {
+    private boolean createTransactionProduct() {
         return false;
         //TODO
     }
