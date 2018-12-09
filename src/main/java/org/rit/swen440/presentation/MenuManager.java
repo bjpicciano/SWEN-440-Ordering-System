@@ -8,14 +8,16 @@ import java.util.List;
 import java.util.Objects;
 
 
-public class menumgr {
+public class MenuManager {
 
     private int currentLevel = 2;
     private String currentCategoryName;
     private User user;
+    private Controller controller;
 
 
-    public menumgr() {
+    public MenuManager() {
+        controller = new Controller();
     }
 
     public boolean loadLevel() {
@@ -32,7 +34,7 @@ public class menumgr {
                 LoginLevel();
                 break;
             default:
-                System.out.println("Returning to main org.rit.swen440.presentation.menu");
+                System.out.println("Returning to main org.rit.swen440.presentation.Menu");
                 currentLevel = 0;
                 CategoryLevel();
                 break;
@@ -43,24 +45,24 @@ public class menumgr {
 
     private void LoginLevel() {
         System.out.print("Email: ");
-        menu m = new menu();
+        Menu m = new Menu();
         String email = m.getSelection();
 
         System.out.print("Password: ");
-        m = new menu();
+        m = new Menu();
         String password = m.getSelection();
 
         //TODO User Login
         System.out.println("Logging in as " + email + " with password " + password);
-        //user = Controller.login(username, password);
+        //user = controller.login(username, password);
 
         currentLevel = 0;
     }
 
     private void CategoryLevel() {
-        menu m = new menu();
+        Menu m = new Menu();
 
-        List<Category> categoriesList = Controller.getAllCategories();
+        List<Category> categoriesList = controller.getAllCategories();
 
         List<String> categories = new ArrayList<>();
         for(Category category: categoriesList){
@@ -92,9 +94,9 @@ public class menumgr {
     }
 
     private void ItemLevel() {
-        menu m = new menu();
+        Menu m = new Menu();
 
-        List<Product> productList = Controller.getProductsInCategory(currentCategoryName);
+        List<Product> productList = controller.getProductsInCategory(currentCategoryName);
         List<String> itemList = new ArrayList<>();
         Product currentProduct = null;
 
@@ -131,18 +133,22 @@ public class menumgr {
 
         System.out.println(currentProduct.getName() + " availability: " + currentProduct.getCount());
         System.out.print(":");
-        menu m = new menu();
-        int result = Integer.parseInt(m.getSelection());
+        Menu m = new Menu();
+        try {
+            int result = Integer.parseInt(m.getSelection());
 
-        if (result > currentProduct.getCount()) {
-            System.out.println("There are not that many available to order.");
-        } else {
-            List<Product> products = new ArrayList<>();
-            products.add(currentProduct);
+            if (result > currentProduct.getCount()) {
+                System.out.println("There are not that many available to order.");
+            } else {
+                List<Product> products = new ArrayList<>();
+                products.add(currentProduct);
 
-            Controller.createTransaction(user, products);
+                controller.createTransaction(user, products);
 
-            System.out.println("You ordered:" + result);
+                System.out.println("You ordered:" + result);
+            }
+        } catch (Exception e) {
+            System.out.println("Improper input detected.");
         }
     }
 }

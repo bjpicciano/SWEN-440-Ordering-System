@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class menu
+public class Menu
 {
     private List<String> menuList;
     Scanner sc;
-    public menu()
+    public Menu()
     {
         sc = new Scanner(System.in);
     }

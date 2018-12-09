@@ -1,15 +1,14 @@
 package org.rit.swen440;
 
-import org.rit.swen440.presentation.menumgr;
-import org.rit.swen440.models.*;
+import org.rit.swen440.presentation.MenuManager;
 
-public class menutest
+public class MenuMain
 {
     public static void main(String[] args)
     {
         System.setProperty("fileSystemRoot", "./orderSys");
 
-        menumgr mgr = new menumgr();
+        MenuManager mgr = new MenuManager();
         boolean done = false;
         do {
             done = mgr.loadLevel();
