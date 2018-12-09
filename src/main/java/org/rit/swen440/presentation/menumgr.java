@@ -40,8 +40,17 @@ public class menumgr {
     }
 
     private void LoginLevel() {
+        System.out.print("Email: ");
+        menu m = new menu();
+        String email = m.getSelection();
+
+        System.out.print("Password: ");
+        m = new menu();
+        String password = m.getSelection();
+
         //TODO User Login
-        user = new User();
+        System.out.println("Logging in as " + email + " with password " + password);
+        //user = User.login(username, password);
 
         currentLevel = 0;
     }
