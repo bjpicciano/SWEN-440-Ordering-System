@@ -89,6 +89,14 @@ public class Product {
         return products;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
+    public int getCount() {
+        return this.count;
+    }
+
     @Override
     public String toString() {
         return name + " (" + formatter.format(price) + ")";

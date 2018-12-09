@@ -82,30 +82,24 @@ public class menumgr {
         //TODO Database: "SELECT * FROM product WHERE category_name = currentCategoryName"
         List<Product> productList = Product.getProductsInCategory(currentCategoryName);
         List<String> itemList = new ArrayList<>();
+        Product currentProduct = null;
 
-        List<String> l = new ArrayList<>();
         for(Product product: productList){
             itemList.add(product.toString());
         }
-        l = itemList;
 
-        //List<String> itemList = controller.getProducts(currentCategoryName);
         System.out.println("");
-        /*for (String itm: itemList)
-            l.add(controller.getProductInformation(currentCategoryName, itm, Controller.PRODUCT_FIELD.NAME)
-             + "($" + controller.getProductInformation(currentCategoryName, itm, Controller.PRODUCT_FIELD.COST) + ")");*/
 
-        m.loadMenu(l);
+        m.loadMenu(itemList);
         m.addMenuItem("'q' to Quit");
         System.out.println("The following items are available");
         m.printMenu();
         String result = m.getSelection();
         try {
             int iSel = Integer.parseInt(result); //Item selected
-            currentItemName = itemList.get(iSel);
+            currentProduct = productList.get(iSel);
 
-            //Now read the file and print the org.rit.swen440.presentation.items in the catalog
-            System.out.println("You want item from the catalog: " + currentItemName);
+            System.out.println("You want item from the catalog: " + currentProduct.getName());
         }
         catch (Exception e) {
             result = "q";
@@ -113,26 +107,26 @@ public class menumgr {
         if (result.equalsIgnoreCase("q"))
             currentLevel--;
         else {
-            OrderQty(currentCategoryName, currentItemName);
+            OrderQty(currentProduct);
         }
     }
 
     //Order Level
-    private void OrderQty(String category, String item) {
+    private void OrderQty(Product currentProduct) {
         System.out.println("Please select a quantity");
 
-        //TODO Database: "SELECT * FROM product WHERE name = currentItemName"
-        System.out.println(controller.getProductInformation(category, item, Controller.PRODUCT_FIELD.NAME) +
-                " availability:" + controller.getProductInformation(category, item, Controller.PRODUCT_FIELD.INVENTORY));
+        System.out.println(currentProduct.getName() + " availability: " + currentProduct.getCount());
         System.out.print(":");
         menu m = new menu();
-        String result = m.getSelection();
+        int result = Integer.parseInt(m.getSelection());
 
-        //TODO Check for Availability of Quantity
+        if (result > currentProduct.getCount()) {
+            System.out.println("There are not that many available to order.");
+        } else {
+            //TODO Database: "INSERT INTO transaction (uniqueId, currentDate, null, null, clientId)"
+            //TODO Database: "INSERT INTO transaction_product (uniqueId, product.sku, product.price, result"
 
-        //TODO Database: "INSERT INTO transaction (uniqueId, currentDate, null, null, clientId)"
-        //TODO Database: "INSERT INTO transaction_product (uniqueId, product.sku, product.price, result"
-
-        System.out.println("You ordered:" + result);
+            System.out.println("You ordered:" + result);
+        }
     }
 }
