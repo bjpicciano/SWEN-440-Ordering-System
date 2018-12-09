@@ -83,13 +83,16 @@ A key part of evaluation will be installing, building and running the
 system you produce.
 Additionally, explaining architecture choices going forward is essential.**
 
-Test Users
+### Test Users
+```
 Client 1:
  - Email: client@oos.com
  - Password: 123
+ 
 Client 2:
  - Email: client2@oos.com
  - Password: 123
+ 
 Admin
  - Email: admin@oos.com
- - Password: 123
+ - Password: 123```
