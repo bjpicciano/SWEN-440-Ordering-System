@@ -16,8 +16,6 @@ public class User {
     }
 
     protected static User getUserById(int id) {
-        User user = new User();
-
         try {
             ResultSet rs = Database.query(
                     "SELECT\n" +
@@ -29,12 +27,12 @@ public class User {
             String email = rs.getString("email");
             rs.close();
 
-            user = new User(id, email);
+            return new User(id, email);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return user;
+        return null;
     }
 
     @Override

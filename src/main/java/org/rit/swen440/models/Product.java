@@ -25,8 +25,6 @@ public class Product {
     }
 
     static Product getProductBySKU(int sku) {
-        Product product = null;
-
         try {
             ResultSet rs = Database.query("SELECT\n" +
                     "       sku,\n" +
@@ -44,15 +42,14 @@ public class Product {
             float price = rs.getFloat("price");
             String categoryName = rs.getString("category_name");
             Category category = Category.getCategoryByName(categoryName);
-
-            product = new Product(sku, count, name, description, price, category);
-
             rs.close();
+
+            return new Product(sku, count, name, description, price, category);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return product;
+        return null;
     }
 
     public static List<Product> getProductsInCategory(String category_name) {

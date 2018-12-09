@@ -26,6 +26,7 @@ public class Transaction {
         this.client = client;
         this.transactionProducts = transactionProducts;
 
+        // Convert String into Dates
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             this.dateOrdered = formatter.parse(dateOrdered);
@@ -41,7 +42,6 @@ public class Transaction {
     }
 
     public static Transaction getTransactionById(int id) {
-        Transaction transaction = new Transaction();
         List<TransactionProduct> transactionProducts = TransactionProduct.getTransactionProductsByTransactionId(id);
 
         try {
@@ -61,14 +61,14 @@ public class Transaction {
 
             int userId = rs.getInt("user_id");
             User user = User.getUserById(userId);
-            transaction = new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
-
             rs.close();
+
+            return new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return transaction;
+        return null;
     }
 
     public static List<Transaction> queryAuditLog(String predicate) {
