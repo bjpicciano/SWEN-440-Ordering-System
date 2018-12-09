@@ -1,10 +1,6 @@
 package org.rit.swen440.models;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Product {
     private int sku;

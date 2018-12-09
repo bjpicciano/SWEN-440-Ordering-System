@@ -1,10 +1,5 @@
 package org.rit.swen440.models;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Category {
     private String name;
     private String description;

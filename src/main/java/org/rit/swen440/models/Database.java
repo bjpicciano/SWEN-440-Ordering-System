@@ -1,13 +1,15 @@
 package org.rit.swen440.models;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Database {
-    private static Connection getConnection() {
+    Connection connection;
+
+    public Database() {
+        this.connection = getConnection();
+    }
+
+    private Connection getConnection() {
         String url = "jdbc:sqlite:products.db"; // SQLite connection string
         Connection connection = null;
 
@@ -20,8 +22,7 @@ public class Database {
         return connection;
     }
 
-    public static ResultSet query(String sql) throws SQLException {
-        Connection connection = getConnection();
+    public ResultSet query(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         return statement.executeQuery(sql);
     }

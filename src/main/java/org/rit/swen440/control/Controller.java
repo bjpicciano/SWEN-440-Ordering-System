@@ -15,6 +15,11 @@ import java.util.Optional;
  * categories and products from information on the underlying file system.
  */
 public class Controller {
+    Database database;
+
+    public Controller() {
+        database = new Database();
+    }
 
     public static List<Transaction> queryAuditLog(String predicate) {
         List<Transaction> transactions = new ArrayList<>();
@@ -22,9 +27,9 @@ public class Controller {
         //TODO
     }
 
-    private static User getUserById(int id) {
+    private User getUserById(int id) {
         try {
-            ResultSet rs = Database.query(
+            ResultSet rs = database.query(
                     "SELECT\n" +
                             "       id,\n" +
                             "       email\n" +
@@ -46,7 +51,7 @@ public class Controller {
         List<Category> categories = new ArrayList<>();
 
         try {
-            ResultSet rs = Database.query("SELECT name, description FROM category");
+            ResultSet rs = database.query("SELECT name, description FROM category");
             while (rs.next()) {
                 String name = rs.getString("name");
                 String description = rs.getString("description");
@@ -63,7 +68,7 @@ public class Controller {
 
     public Category getCategoryByName(String name) {
         try {
-            ResultSet rs = Database.query("SELECT description FROM category WHERE name = '" + name + "'");
+            ResultSet rs = database.query("SELECT description FROM category WHERE name = '" + name + "'");
 
             String description = rs.getString("description");
             rs.close();
@@ -78,7 +83,7 @@ public class Controller {
 
     public Product getProductBySKU(int sku) {
         try {
-            ResultSet rs = Database.query("SELECT\n" +
+            ResultSet rs = database.query("SELECT\n" +
                     "       sku,\n" +
                     "       count,\n" +
                     "       name,\n" +
@@ -113,7 +118,7 @@ public class Controller {
         List<Product> products = new ArrayList<>();
 
         try {
-            ResultSet rs = Database.query(
+            ResultSet rs = database.query(
                     "SELECT\n" +
                             "       sku,\n" +
                             "       count,\n" +
@@ -152,7 +157,7 @@ public class Controller {
         List<TransactionProduct> transactionProducts = getTransactionProductsByTransactionId(id);
 
         try {
-            ResultSet rs = Database.query(
+            ResultSet rs = database.query(
                     "SELECT\n" +
                             "       id,\n" +
                             "       date_ordered,\n" +
@@ -187,7 +192,7 @@ public class Controller {
         List<TransactionProduct> transactionProducts = new ArrayList<>();
 
         try {
-            ResultSet rs = Database.query(
+            ResultSet rs = database.query(
                     "SELECT\n" +
                             "       transaction_id,\n" +
                             "       product_sku,\n" +
