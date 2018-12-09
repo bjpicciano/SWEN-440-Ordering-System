@@ -40,25 +40,20 @@ public class AuditManager {
         m = new Menu();
         String password = m.getSelection();
 
-        //TODO User Login
-        System.out.println("Logging in as " + email + " with password " + password);
-        //user = Controller.login(username, password);
-
-        currentLevel = 0;
+        user = controller.login(email, password);
+        if (user == null) {
+            System.out.println("Email or password is incorrect.");
+        } else if (user.getAccountType().equals("admin")) {
+            System.out.println("Login Successful.");
+            System.out.println();
+            currentLevel = 0;
+        } else {
+            System.out.println("Only admins may audit the system.");
+        }
     }
 
     private void AuditLevel() {
-        System.out.print("Email: ");
-        Menu m = new Menu();
-        String email = m.getSelection();
-
-        System.out.print("Password: ");
-        m = new Menu();
-        String password = m.getSelection();
-
-        //TODO User Login
-        System.out.println("Logging in as " + email + " with password " + password);
-        //user = Controller.login(username, password);
+        //TODO Auditing
 
         currentLevel = 0;
     }
