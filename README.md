@@ -29,7 +29,7 @@ The **Online Ordering System** was developed using the Java language. The
 developers used the IntelliJ IDEA IDE, and DB Browser for SQLite for their principle
 development tools.
 
-The orderSys.properties and product.db file's changes are not tracked in git because of:  
+The product.db file changes are not tracked in git because of:  
 ```git update-index --skip-worktree <file> ```  
 Use this command to track again  
 ```git update-index --no-skip-worktree <file>```
