@@ -2,6 +2,9 @@ package org.rit.swen440.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,8 +15,8 @@ public class Transaction {
     private User client;
     private List<TransactionProduct> transactionProducts;
     private Date dateOrdered;
-    private Optional<Date> dateShipped;
-    private Optional<Date> dateReceived;
+    private Date dateShipped;
+    private Date dateReceived;
 
     public Transaction() {
     }
@@ -23,10 +26,14 @@ public class Transaction {
         this.client = client;
         this.transactionProducts = transactionProducts;
 
-        //TODO: Dates
-        this.dateOrdered = new Date();//dateOrdered;
-//        this.dateShipped = dateShipped;
-//        this.dateReceived = dateReceived;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            this.dateOrdered = formatter.parse(dateOrdered);
+            if (dateShipped != null) this.dateShipped = formatter.parse(dateShipped);
+            if (dateReceived != null) this.dateReceived = formatter.parse(dateReceived);
+        } catch (ParseException e) {
+            e.getMessage();
+        }
     }
 
     public static boolean createTransaction(User client, List<TransactionProduct> products) {

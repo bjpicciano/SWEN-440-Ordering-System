@@ -78,6 +78,7 @@ public class Product {
 
                 products.add(new Product(sku, count, name, description, price, category));
             }
+
             rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
