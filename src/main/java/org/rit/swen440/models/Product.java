@@ -23,22 +23,32 @@ public class Product {
     }
 
     static Product getProductBySKU(int sku) {
+        Product product = null;
+
         try {
-            ResultSet rs = Database.query("SELECT sku, count, name, description, price, category_name FROM product WHERE sku = '" + sku + "'");
+            ResultSet rs = Database.query("SELECT\n" +
+                    "       sku,\n" +
+                    "       count,\n" +
+                    "       name,\n" +
+                    "       description,\n" +
+                    "       price,\n" +
+                    "       category_name\n" +
+                    "FROM product\n" +
+                    "WHERE sku = " + sku);
 
             int count = rs.getInt("count");
             String name = rs.getString("name");
             String description = rs.getString("description");
             float price = rs.getFloat("price");
             String category_name = rs.getString("category_name");
+            product = new Product(sku, count, name, description, price, Category.getCategoryByName(category_name));
 
             rs.close();
-
-            return new Product(sku, count, name, description, price, Category.getCategoryByName(category_name));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+
+        return product;
     }
 
     public static List<Product> getProductsInCategory(String category_name) {
@@ -63,6 +73,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return name + ": " + description;
+        return "Product{" +
+                "sku=" + sku +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
