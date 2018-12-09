@@ -23,10 +23,47 @@ public class Controller {
         database = new Database();
     }
 
-    public static List<Transaction> queryAuditLog(String predicate) {
+    public List<Transaction> queryAuditLog(String predicate) {
         List<Transaction> transactions = new ArrayList<>();
+
+        try {
+            ResultSet rs = database.query(
+            "SELECT\n" +
+                "       id,\n" +
+                "       date_ordered,\n" +
+                "       date_shipped,\n" +
+                "       date_received,\n" +
+                "       user_id\n" +
+                "FROM transactions\n" +
+                predicate
+            );
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String dateOrdered = rs.getString("date_ordered");
+                String dateShipped = rs.getString("date_shipped");
+                String dateReceived = rs.getString("date_received");
+                int userId = rs.getInt("user_id");
+
+                User user = getUserById(userId);
+                List<TransactionProduct> transactionProducts = getTransactionProductsByTransactionId(id);
+
+                transactions.add(new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         return transactions;
-        //TODO
+    }
+
+    public List<Transaction> getTransactionsBetweenDates(String startDate, String endDate) {
+        List<Transaction> transactions = new ArrayList<>();
+
+        String predicate = "WHERE DATE(date_shipped) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')";
+        transactions = queryAuditLog(predicate);
+
+        return transactions;
     }
 
     public User login(String email, String password) {
