@@ -28,7 +28,11 @@ public class menu
         System.out.println("");
         for (int i = 0; i < menuList.size(); i++)
         {
-            System.out.println(i+": " + menuList.get(i));
+            if (menuList.get(i).equalsIgnoreCase("\'q\' to Quit")) {
+                System.out.println("q: to Quit");
+            } else {
+                System.out.println(i + ": " + menuList.get(i));
+            }
         }
         System.out.println("");
     }
