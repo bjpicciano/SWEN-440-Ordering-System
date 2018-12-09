@@ -2,17 +2,22 @@ package org.rit.swen440.control;
 
 import org.junit.Test;
 import org.rit.swen440.models.Category;
+import org.rit.swen440.models.Transaction;
 import org.rit.swen440.models.User;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 public class ControllerTest {
     private Controller controller = new Controller();
+
     @Test
     public void getTransactionsBetweenDates() {
-
+        List<Transaction> transactions = controller.getTransactionsBetweenDates("2018-12-01", "2018-12-30");
+        if (transactions.isEmpty()) {
+            fail();
+        }
     }
 
     @Test
