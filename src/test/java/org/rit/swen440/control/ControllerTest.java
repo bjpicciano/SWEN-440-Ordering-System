@@ -41,11 +41,7 @@ public class ControllerTest {
 
     @Test
     public void getProductsInCategory() {
-
-    }
-
-    @Test
-    public void createTransaction() {
-
+        if (controller.getProductsInCategory("toy").isEmpty())
+            fail();
     }
 }
