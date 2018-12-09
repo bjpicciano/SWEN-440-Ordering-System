@@ -2,6 +2,7 @@ package org.rit.swen440.control;
 
 import org.junit.Test;
 import org.rit.swen440.models.Category;
+import org.rit.swen440.models.User;
 
 import java.util.List;
 
@@ -21,7 +22,13 @@ public class ControllerTest {
 
     @Test
     public void login() {
+        User user = controller.login("admin@oos.com", "123");
+        if (user == null)
+            fail();
 
+        User notUser = controller.login("notauser@fakeemail.com", "notapassword");
+        if (notUser != null)
+            fail();
     }
 
     @Test
