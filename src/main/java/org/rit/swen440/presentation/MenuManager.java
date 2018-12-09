@@ -77,19 +77,16 @@ public class MenuManager {
         m.loadMenu(categories);
 
         m.addMenuItem("'q' to Quit"); 
-        System.out.println("The following org.rit.swen440.presentation.categories are available");
+        System.out.println("The following categories are available");
         m.printMenu();
         String result;
         try {
             result = m.getSelection();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             result = "q";
-        }
-        if (Objects.equals(result,"q")) {
+        } if (Objects.equals(result,"q")) {
             currentLevel--;
-        }
-        else {
+        } else {
             currentLevel++;
             int iSel = Integer.parseInt(result);
 
@@ -121,11 +118,9 @@ public class MenuManager {
             currentProduct = productList.get(iSel);
 
             System.out.println("You want item from the catalog: " + currentProduct.getName());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             result = "q";
-        }
-        if (result.equalsIgnoreCase("q"))
+        } if (result.equalsIgnoreCase("q"))
             currentLevel--;
         else {
             OrderQty(currentProduct);
