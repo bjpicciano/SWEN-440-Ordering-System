@@ -143,9 +143,9 @@ public class MenuManager {
                 List<Product> products = new ArrayList<>();
                 products.add(currentProduct);
 
-                controller.createTransaction(user, products);
+                controller.createTransaction(user, products, result);
 
-                System.out.println("You ordered:" + result);
+                System.out.println("You ordered: " + result);
             }
         } catch (Exception e) {
             System.out.println("Improper input detected.");
