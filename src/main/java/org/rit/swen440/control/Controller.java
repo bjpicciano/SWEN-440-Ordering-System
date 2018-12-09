@@ -27,24 +27,86 @@ public class Controller {
         //TODO
     }
 
-    private User getUserById(int id) {
+    public User login(String email, String password) {
         try {
             ResultSet rs = database.query(
-                    "SELECT\n" +
-                            "       id,\n" +
-                            "       email\n" +
-                            "FROM user\n" +
-                            "WHERE id = " + id);
+            "SELECT\n" +
+                "       id,\n" +
+                "       email\n" +
+                "FROM user\n" +
+                "WHERE\n" +
+                "    email = '" + email + "'\n" +
+                "AND\n" +
+                "    password = " + password
+            );
 
-            String email = rs.getString("email");
+            int id = rs.getInt("id");
+
+            String userType = getUserTypeById(id);
+
             rs.close();
 
-            return new User(id, email);
+            return new User(id, email, userType);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
         return null;
+    }
+
+    public User getUserById(int id) {
+        try {
+            ResultSet rs = database.query(
+            "SELECT\n" +
+                "       id,\n" +
+                "       email\n" +
+                "FROM user\n" +
+                "WHERE id = " + id
+            );
+
+            String email = rs.getString("email");
+
+            String userType = getUserTypeById(id);
+
+            rs.close();
+
+            return new User(id, email, userType);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    public boolean isUserInUserType(int id, String userType) {
+        try {
+            ResultSet rs = database.query(
+            "SELECT user_id FROM " + userType + "\n" +
+                "WHERE user_id = " + id
+            );
+
+            int userId = rs.getInt("user_id");
+            rs.close();
+
+            return id == userId;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+    private String getUserTypeById(int id) {
+        String userType = null;
+        boolean isClient = isUserInUserType(id, "client");
+        if (isClient) userType = "client";
+        else {
+            boolean isAdmin = isUserInUserType(id, "admin");
+            if (isAdmin) userType = "admin";
+        }
+        if (userType == null) throw new IllegalArgumentException("user is neither a client or admin");
+
+        return userType;
     }
 
     public List<Category> getAllCategories() {

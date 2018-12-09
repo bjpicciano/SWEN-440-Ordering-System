@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class User {
     private int id;
     private String email;
+    private String accountType;
 
     public User() {
     }
@@ -15,11 +16,18 @@ public class User {
         this.email = email;
     }
 
+    public User(int id, String email, String accountType ) {
+        this.id = id;
+        this.email = email;
+        this.accountType = accountType;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", accountType='" + accountType + '\'' +
                 '}';
     }
 }
