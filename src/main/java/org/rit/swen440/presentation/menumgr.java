@@ -45,7 +45,13 @@ public class menumgr {
     private void CategoryLevel() {
         menu m = new menu();
         //TODO Database: "SELECT * FROM category"
-        List<String> categories = controller.getCategories();
+        List<Category> categoriesList = Category.getAllCategories();
+
+        List<String> categories = new ArrayList<>();
+        for(Category category: categoriesList){
+            categories.add(category.getName());
+        }
+
         m.loadMenu(categories);
 
         m.addMenuItem("'q' to Quit"); 
@@ -81,13 +87,14 @@ public class menumgr {
         for(Product product: productList){
             itemList.add(product.toString());
         }
+        l = itemList;
 
         //List<String> itemList = controller.getProducts(currentCategoryName);
         System.out.println("");
-        for (String itm: itemList)
+        /*for (String itm: itemList)
             l.add(controller.getProductInformation(currentCategoryName, itm, Controller.PRODUCT_FIELD.NAME)
-             + "($" + controller.getProductInformation(currentCategoryName, itm, Controller.PRODUCT_FIELD.COST) + ")");
-        
+             + "($" + controller.getProductInformation(currentCategoryName, itm, Controller.PRODUCT_FIELD.COST) + ")");*/
+
         m.loadMenu(l);
         m.addMenuItem("'q' to Quit");
         System.out.println("The following items are available");

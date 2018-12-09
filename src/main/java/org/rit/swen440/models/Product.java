@@ -2,6 +2,7 @@ package org.rit.swen440.models;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Product {
     private String description;
     private float price;
     private Category category;
+    static NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
     private Product(int sku, int count, String name, String description, float price, Category category) {
         this.sku = sku;
@@ -89,9 +91,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "sku=" + sku +
-                ", name='" + name + '\'' +
-                '}';
+        return name + " (" + formatter.format(price) + ")";
     }
 }
