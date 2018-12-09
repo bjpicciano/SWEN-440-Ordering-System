@@ -16,40 +16,6 @@ public class TransactionProduct {
         this.quantity = quantity;
     }
 
-    public static boolean createTransactionProduct() {
-        return false;
-    }
-
-    protected static List<TransactionProduct> getTransactionProductsByTransactionId(int transactionId) {
-        List<TransactionProduct> transactionProducts = new ArrayList<>();
-
-        try {
-            ResultSet rs = Database.query(
-                    "SELECT\n" +
-                    "       transaction_id,\n" +
-                    "       product_sku,\n" +
-                    "       purchase_price,\n" +
-                    "       quantity\n" +
-                    "FROM transaction_product\n" +
-                    "WHERE transaction_id = " + transactionId
-            );
-            while (rs.next()) {
-                int sku = rs.getInt("product_sku");
-                Product product = Product.getProductBySKU(sku);
-
-                float purchasePrice = rs.getFloat("purchase_price");
-                int quantity = rs.getInt("quantity");
-
-                transactionProducts.add(new TransactionProduct(product, purchasePrice, quantity));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return transactionProducts;
-    }
-
     @Override
     public String toString() {
         return "TransactionProduct{" +

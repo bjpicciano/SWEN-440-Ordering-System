@@ -37,45 +37,6 @@ public class Transaction {
         }
     }
 
-    public static boolean createTransaction(User client, List<TransactionProduct> products) {
-        return false;
-    }
-
-    public static Transaction getTransactionById(int id) {
-        List<TransactionProduct> transactionProducts = TransactionProduct.getTransactionProductsByTransactionId(id);
-
-        try {
-            ResultSet rs = Database.query(
-                    "SELECT\n" +
-                    "       id,\n" +
-                    "       date_ordered,\n" +
-                    "       date_shipped,\n" +
-                    "       date_received,\n" +
-                    "       user_id\n" +
-                    "FROM transactions\n" +
-                    "WHERE id = " + id);
-
-            String dateOrdered = rs.getString("date_ordered");
-            String dateShipped = rs.getString("date_shipped");
-            String dateReceived = rs.getString("date_received");
-
-            int userId = rs.getInt("user_id");
-            User user = User.getUserById(userId);
-            rs.close();
-
-            return new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return null;
-    }
-
-    public static List<Transaction> queryAuditLog(String predicate) {
-        List<Transaction> transactions = new ArrayList<>();
-        return transactions;
-    }
-
     @Override
     public String toString() {
         return "Transaction{" +

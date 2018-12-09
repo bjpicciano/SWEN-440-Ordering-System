@@ -15,26 +15,6 @@ public class User {
         this.email = email;
     }
 
-    protected static User getUserById(int id) {
-        try {
-            ResultSet rs = Database.query(
-                    "SELECT\n" +
-                    "       id,\n" +
-                    "       email\n" +
-                    "FROM user\n" +
-                    "WHERE id = " + id);
-
-            String email = rs.getString("email");
-            rs.close();
-
-            return new User(id, email);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return null;
-    }
-
     @Override
     public String toString() {
         return "User{" +
