@@ -53,9 +53,15 @@ public class MenuManager {
         String password = m.getSelection();
 
         user = controller.login(email, password);
-        //if (user.getAccountType())
-
-        currentLevel = 0;
+        if (user == null) {
+            System.out.println("Email or password is incorrect.");
+        } else if (user.getAccountType().equals("client")) {
+            System.out.println("Login Successful.");
+            System.out.println();
+            currentLevel = 0;
+        } else {
+            System.out.println("Only clients may order through the system.");
+        }
     }
 
     private void CategoryLevel() {
