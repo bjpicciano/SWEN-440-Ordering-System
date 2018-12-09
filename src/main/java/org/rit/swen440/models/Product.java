@@ -94,6 +94,10 @@ public class Product {
         return this.count;
     }
 
+    public float getPrice() {
+        return this.price;
+    }
+
     @Override
     public String toString() {
         return name + " (" + formatter.format(price) + ")";
