@@ -63,8 +63,8 @@ public class Controller {
         try {
             ResultSet rs = database.query(
             "SELECT\n" +
-                "  SUM(quantity) AS amount_sold,\n" +
-                "  product_sku\n" +
+                "       SUM(quantity) AS amount_sold,\n" +
+                "       product_sku\n" +
                 "FROM transaction_product\n" +
                 "INNER JOIN transactions on transaction_id = id\n" +
                 "WHERE date_ordered LIKE '" + yearMonthDate + "%'\n" +
@@ -106,9 +106,9 @@ public class Controller {
                 "       email\n" +
                 "FROM user\n" +
                 "WHERE\n" +
-                "    email = '" + email + "'\n" +
+                "       email = '" + email + "'\n" +
                 "AND\n" +
-                "    password = " + password
+                "       password = " + password
             );
 
             int id = rs.getInt("id");
