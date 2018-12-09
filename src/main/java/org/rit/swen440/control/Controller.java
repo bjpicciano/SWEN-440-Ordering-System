@@ -138,7 +138,7 @@ public class Controller {
 
             return new User(id, email, userType);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         }
 
         return null;
@@ -155,7 +155,7 @@ public class Controller {
 
             return id == userId;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         }
 
         return false;
@@ -275,7 +275,7 @@ public class Controller {
             database.insertTransaction(date_ordered, null, null, client_id);
             ResultSet rs = database.query("SELECT seq FROM sqlite_sequence WHERE name = 'transactions'");
             int transaction_id = rs.getInt("seq");
-            rs.close();
+
             for(Product product : products ) {
                 boolean success = createTransactionProduct(transaction_id, product, quantity);
                 if(!success) {
@@ -289,36 +289,6 @@ public class Controller {
             return false;
         }
     }
-
-//    public Transaction getTransactionById(int id) {
-//        List<TransactionProduct> transactionProducts = getTransactionProductsByTransactionId(id);
-//
-//        try {
-//            ResultSet rs = database.query(
-//            "SELECT\n" +
-//                "       id,\n" +
-//                "       date_ordered,\n" +
-//                "       date_shipped,\n" +
-//                "       date_received,\n" +
-//                "       user_id\n" +
-//                "FROM transactions\n" +
-//                "WHERE id = " + id
-//            );
-//
-//            String dateOrdered = rs.getString("date_ordered");
-//            String dateShipped = rs.getString("date_shipped");
-//            String dateReceived = rs.getString("date_received");
-//
-//            int userId = rs.getInt("user_id");
-//            User user = getUserById(userId);
-//
-//            return new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//
-//        return null;
-//    }
 
     private boolean createTransactionProduct(int transaction_id, Product product, int quantity) {
         try {
