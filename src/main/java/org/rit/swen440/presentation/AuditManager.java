@@ -119,7 +119,7 @@ public class AuditManager {
         Menu m = new Menu();
         String month = m.getSelection();
 
-        System.out.println(controller.getTopandBottomSoldProducts(month));
+        System.out.println(controller.getTopAndBottomSoldProducts(month));
         System.out.println();
 
         currentLevel = 0;

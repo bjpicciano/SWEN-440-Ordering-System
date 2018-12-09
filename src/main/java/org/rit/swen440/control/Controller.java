@@ -23,7 +23,7 @@ public class Controller {
         database = new Database();
     }
 
-    public List<Transaction> queryAuditLog(String predicate) {
+    public List<Transaction> getTransactionsBetweenDates(String startDate, String endDate) {
         List<Transaction> transactions = new ArrayList<>();
 
         try {
@@ -35,7 +35,7 @@ public class Controller {
                 "       date_received,\n" +
                 "       user_id\n" +
                 "FROM transactions\n" +
-                predicate
+                "WHERE DATE(date_shipped) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')"
             );
 
             while (rs.next()) {
@@ -57,13 +57,42 @@ public class Controller {
         return transactions;
     }
 
-    public List<Transaction> getTransactionsBetweenDates(String startDate, String endDate) {
-        List<Transaction> transactions = new ArrayList<>();
+    public List<Product> getTopAndBottomSoldProducts(String yearMonthDate) {
+        List<Product> soldProducts = new ArrayList<>();
 
-        String predicate = "WHERE DATE(date_shipped) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')";
-        transactions = queryAuditLog(predicate);
+        try {
+            ResultSet rs = database.query(
+            "SELECT\n" +
+                "  SUM(quantity) AS amount_sold,\n" +
+                "  product_sku\n" +
+                "FROM transaction_product\n" +
+                "INNER JOIN transactions on transaction_id = id\n" +
+                "WHERE date_ordered LIKE '2018-12%'\n" +
+                "GROUP BY product_sku\n" +
+                "ORDER BY amount_sold DESC"
+            );
 
-        return transactions;
+            while (rs.next()) {
+                int amountSold = rs.getInt("amount_sold");
+                int sku = rs.getInt("product_sku");
+                Product product = getProductBySKU(sku);
+                product.setCount(amountSold);
+
+                soldProducts.add(product);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        int topSold = soldProducts.get(0).getCount();
+        int bottomSold = soldProducts.get(soldProducts.size()-1).getCount();
+        List<Product> products = new ArrayList<>();
+        for (Product product: soldProducts) {
+            if (product.getCount() == topSold || product.getCount() == bottomSold)
+                products.add(product);
+        }
+
+        return products;
     }
 
     public User login(String email, String password) {
@@ -85,7 +114,7 @@ public class Controller {
 
             return new User(id, email, userType);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
 
         return null;
