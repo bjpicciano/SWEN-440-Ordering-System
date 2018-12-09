@@ -16,6 +16,21 @@ public class TransactionProduct {
         this.quantity = quantity;
     }
 
+    public static boolean createTransactionProduct() {
+        try {
+            ResultSet rs = Database.query(
+                "INSERT INTO transaction_product (transaction_id,product_sku,purchase_price,quantity)\n" +
+                    "VALUES (1,2,5.00,10)"
+            );
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
     protected static List<TransactionProduct> getTransactionProductsByTransactionId(int transactionId) {
         List<TransactionProduct> transactionProducts = new ArrayList<>();
 
@@ -27,7 +42,8 @@ public class TransactionProduct {
                     "       purchase_price,\n" +
                     "       quantity\n" +
                     "FROM transaction_product\n" +
-                    "WHERE transaction_id = " + transactionId);
+                    "WHERE transaction_id = " + transactionId
+            );
             while (rs.next()) {
                 int sku = rs.getInt("product_sku");
                 Product product = Product.getProductBySKU(sku);
