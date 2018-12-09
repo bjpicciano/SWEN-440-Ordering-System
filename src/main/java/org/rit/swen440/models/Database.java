@@ -48,7 +48,7 @@ public class Database {
     }
 
     public void updateCount(int sku, int quantity) throws SQLException {
-        String sql = "UPDATE product SET count = count - VALUES(?) WHERE sku == VALUES(?)";
+        String sql = "UPDATE product SET count = count - ? WHERE sku = ?";
         PreparedStatement pstmt = connection.prepareStatement(sql);
         pstmt.setInt(1, quantity);
         pstmt.setInt(2, sku);

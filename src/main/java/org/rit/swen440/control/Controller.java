@@ -247,8 +247,8 @@ public class Controller {
         int client_id = client.getId();
         try {
             database.insertTransaction(date_ordered, null, null, client_id);
-            ResultSet rs = database.query("SELECT last_insert_rowid()");
-            int transaction_id = rs.getInt("id");
+            ResultSet rs = database.query("SELECT seq FROM sqlite_sequence WHERE name = 'transactions'");
+            int transaction_id = rs.getInt("seq");
             rs.close();
             for(Product product : products ) {
                 boolean success = createTransactionProduct(transaction_id, product, quantity);
