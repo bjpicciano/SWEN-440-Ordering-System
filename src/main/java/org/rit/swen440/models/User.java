@@ -8,14 +8,6 @@ public class User {
     private String email;
     private String accountType;
 
-    public User() {
-    }
-
-    public User(int id, String email) {
-        this.id = id;
-        this.email = email;
-    }
-
     public User(int id, String email, String accountType ) {
         this.id = id;
         this.email = email;

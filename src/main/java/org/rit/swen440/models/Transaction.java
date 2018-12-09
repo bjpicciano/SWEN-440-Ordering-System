@@ -13,9 +13,6 @@ public class Transaction {
     private Date dateShipped;
     private Date dateReceived;
 
-    public Transaction() {
-    }
-
     public Transaction(int id, User client, List<TransactionProduct> transactionProducts, String dateOrdered, String dateShipped, String dateReceived) {
         this.id = id;
         this.client = client;
