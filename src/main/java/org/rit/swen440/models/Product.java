@@ -40,8 +40,10 @@ public class Product {
             String name = rs.getString("name");
             String description = rs.getString("description");
             float price = rs.getFloat("price");
-            String category_name = rs.getString("category_name");
-            product = new Product(sku, count, name, description, price, Category.getCategoryByName(category_name));
+            String categoryName = rs.getString("category_name");
+            Category category = Category.getCategoryByName(categoryName);
+
+            product = new Product(sku, count, name, description, price, category);
 
             rs.close();
         } catch (SQLException e) {
@@ -53,21 +55,34 @@ public class Product {
 
     public static List<Product> getProductsInCategory(String category_name) {
         List<Product> products = new ArrayList<>();
+
         try {
-            ResultSet rs = Database.query("SELECT sku, count, name, description, price FROM product WHERE category_name = '" + category_name.toLowerCase() + "'");
+            ResultSet rs = Database.query(
+                    "SELECT\n" +
+                    "       sku,\n" +
+                    "       count,\n" +
+                    "       name,\n" +
+                    "       description,\n" +
+                    "       price,\n" +
+                    "       category_name\n" +
+                    "FROM product\n" +
+                    "WHERE category_name = '" + category_name.toLowerCase() + "'");
+
             while (rs.next()) {
                 int sku = rs.getInt("sku");
                 int count = rs.getInt("count");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 float price = rs.getFloat("price");
+                Category category = Category.getCategoryByName(category_name);
 
-                products.add(new Product(sku, count, name, description, price, Category.getCategoryByName(category_name)));
+                products.add(new Product(sku, count, name, description, price, category));
             }
             rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return products;
     }
 
