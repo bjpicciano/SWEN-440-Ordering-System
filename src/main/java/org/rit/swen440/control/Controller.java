@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Controls access to data, on start-up scans directories and builds internal
@@ -123,7 +122,7 @@ public class Controller {
         return null;
     }
 
-    public User getUserById(int id) {
+    private User getUserById(int id) {
         try {
             ResultSet rs = database.query(
             "SELECT\n" +
@@ -145,7 +144,7 @@ public class Controller {
         return null;
     }
 
-    public boolean isUserInUserType(int id, String userType) {
+    private boolean isUserInUserType(int id, String userType) {
         try {
             ResultSet rs = database.query(
             "SELECT user_id FROM " + userType + "\n" +
@@ -194,7 +193,7 @@ public class Controller {
         return categories;
     }
 
-    public Category getCategoryByName(String name) {
+    private Category getCategoryByName(String name) {
         try {
             ResultSet rs = database.query("SELECT description FROM category WHERE name = '" + name + "'");
 
@@ -208,7 +207,7 @@ public class Controller {
         return null;
     }
 
-    public Product getProductBySKU(int sku) {
+    private Product getProductBySKU(int sku) {
         try {
             ResultSet rs = database.query("SELECT\n" +
                 "       sku,\n" +
@@ -234,11 +233,6 @@ public class Controller {
         }
 
         return null;
-    }
-
-    public Optional<Product> getAllProducts() {
-        return null;
-        //TODO
     }
 
     public List<Product> getProductsInCategory(String category_name) {
@@ -296,35 +290,35 @@ public class Controller {
         }
     }
 
-    public Transaction getTransactionById(int id) {
-        List<TransactionProduct> transactionProducts = getTransactionProductsByTransactionId(id);
-
-        try {
-            ResultSet rs = database.query(
-            "SELECT\n" +
-                "       id,\n" +
-                "       date_ordered,\n" +
-                "       date_shipped,\n" +
-                "       date_received,\n" +
-                "       user_id\n" +
-                "FROM transactions\n" +
-                "WHERE id = " + id
-            );
-
-            String dateOrdered = rs.getString("date_ordered");
-            String dateShipped = rs.getString("date_shipped");
-            String dateReceived = rs.getString("date_received");
-
-            int userId = rs.getInt("user_id");
-            User user = getUserById(userId);
-
-            return new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return null;
-    }
+//    public Transaction getTransactionById(int id) {
+//        List<TransactionProduct> transactionProducts = getTransactionProductsByTransactionId(id);
+//
+//        try {
+//            ResultSet rs = database.query(
+//            "SELECT\n" +
+//                "       id,\n" +
+//                "       date_ordered,\n" +
+//                "       date_shipped,\n" +
+//                "       date_received,\n" +
+//                "       user_id\n" +
+//                "FROM transactions\n" +
+//                "WHERE id = " + id
+//            );
+//
+//            String dateOrdered = rs.getString("date_ordered");
+//            String dateShipped = rs.getString("date_shipped");
+//            String dateReceived = rs.getString("date_received");
+//
+//            int userId = rs.getInt("user_id");
+//            User user = getUserById(userId);
+//
+//            return new Transaction(id, user, transactionProducts, dateOrdered, dateShipped, dateReceived);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+//
+//        return null;
+//    }
 
     private boolean createTransactionProduct(int transaction_id, Product product, int quantity) {
         try {
