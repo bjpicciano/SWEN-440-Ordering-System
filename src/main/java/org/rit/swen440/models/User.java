@@ -1,14 +1,11 @@
 package org.rit.swen440.models;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 public class User {
     private int id;
     private String email;
     private String accountType;
 
-    public User(int id, String email, String accountType ) {
+    public User(int id, String email, String accountType) {
         this.id = id;
         this.email = email;
         this.accountType = accountType;
@@ -17,6 +14,7 @@ public class User {
     public String getAccountType() {
         return this.accountType;
     }
+
     public int getId() {
         return this.id;
     }

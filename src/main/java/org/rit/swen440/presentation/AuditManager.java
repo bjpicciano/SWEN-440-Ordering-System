@@ -131,7 +131,7 @@ public class AuditManager {
 
         int curr = products.get(0).getCount();
         System.out.println("Top sellers of the month:");
-        for (Product product: products) {
+        for (Product product : products) {
             if (product.getCount() < curr)
                 System.out.println("Bottom sellers of the month:");
 

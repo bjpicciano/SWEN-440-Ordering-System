@@ -1,7 +1,9 @@
 package org.rit.swen440.presentation;
 
 import org.rit.swen440.control.Controller;
-import org.rit.swen440.models.*;
+import org.rit.swen440.models.Category;
+import org.rit.swen440.models.Product;
+import org.rit.swen440.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,13 +72,13 @@ public class MenuManager {
         List<Category> categoriesList = controller.getAllCategories();
 
         List<String> categories = new ArrayList<>();
-        for(Category category: categoriesList){
+        for (Category category : categoriesList) {
             categories.add(category.getName());
         }
 
         m.loadMenu(categories);
 
-        m.addMenuItem("'q' to Quit"); 
+        m.addMenuItem("'q' to Quit");
         System.out.println("The following categories are available");
         m.printMenu();
         String result;
@@ -84,7 +86,8 @@ public class MenuManager {
             result = m.getSelection();
         } catch (Exception e) {
             result = "q";
-        } if (Objects.equals(result,"q")) {
+        }
+        if (Objects.equals(result, "q")) {
             currentLevel--;
         } else {
             currentLevel++;
@@ -102,7 +105,7 @@ public class MenuManager {
         List<String> itemList = new ArrayList<>();
         Product currentProduct = null;
 
-        for(Product product: productList){
+        for (Product product : productList) {
             itemList.add(product.toString());
         }
 
@@ -120,7 +123,8 @@ public class MenuManager {
             System.out.println("You want item from the catalog: " + currentProduct.getName());
         } catch (Exception e) {
             result = "q";
-        } if (result.equalsIgnoreCase("q"))
+        }
+        if (result.equalsIgnoreCase("q"))
             currentLevel--;
         else {
             OrderQty(currentProduct);

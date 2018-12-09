@@ -27,14 +27,14 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-            "SELECT\n" +
-                "       id,\n" +
-                "       date_ordered,\n" +
-                "       date_shipped,\n" +
-                "       date_received,\n" +
-                "       user_id\n" +
-                "FROM transactions\n" +
-                "WHERE DATE(date_shipped) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')"
+                    "SELECT\n" +
+                            "       id,\n" +
+                            "       date_ordered,\n" +
+                            "       date_shipped,\n" +
+                            "       date_received,\n" +
+                            "       user_id\n" +
+                            "FROM transactions\n" +
+                            "WHERE DATE(date_shipped) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')"
             );
 
             while (rs.next()) {
@@ -61,14 +61,14 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-            "SELECT\n" +
-                "       SUM(quantity) AS amount_sold,\n" +
-                "       product_sku\n" +
-                "FROM transaction_product\n" +
-                "INNER JOIN transactions on transaction_id = id\n" +
-                "WHERE date_ordered LIKE '" + yearMonthDate + "%'\n" +
-                "GROUP BY product_sku\n" +
-                "ORDER BY amount_sold DESC"
+                    "SELECT\n" +
+                            "       SUM(quantity) AS amount_sold,\n" +
+                            "       product_sku\n" +
+                            "FROM transaction_product\n" +
+                            "INNER JOIN transactions on transaction_id = id\n" +
+                            "WHERE date_ordered LIKE '" + yearMonthDate + "%'\n" +
+                            "GROUP BY product_sku\n" +
+                            "ORDER BY amount_sold DESC"
             );
 
             while (rs.next()) {
@@ -100,14 +100,14 @@ public class Controller {
     public User login(String email, String password) {
         try {
             ResultSet rs = database.query(
-            "SELECT\n" +
-                "       id,\n" +
-                "       email\n" +
-                "FROM user\n" +
-                "WHERE\n" +
-                "       email = '" + email + "'\n" +
-                "AND\n" +
-                "       password = " + password
+                    "SELECT\n" +
+                            "       id,\n" +
+                            "       email\n" +
+                            "FROM user\n" +
+                            "WHERE\n" +
+                            "       email = '" + email + "'\n" +
+                            "AND\n" +
+                            "       password = " + password
             );
 
             int id = rs.getInt("id");
@@ -125,11 +125,11 @@ public class Controller {
     private User getUserById(int id) {
         try {
             ResultSet rs = database.query(
-            "SELECT\n" +
-                "       id,\n" +
-                "       email\n" +
-                "FROM user\n" +
-                "WHERE id = " + id
+                    "SELECT\n" +
+                            "       id,\n" +
+                            "       email\n" +
+                            "FROM user\n" +
+                            "WHERE id = " + id
             );
 
             String email = rs.getString("email");
@@ -147,8 +147,8 @@ public class Controller {
     private boolean isUserInUserType(int id, String userType) {
         try {
             ResultSet rs = database.query(
-            "SELECT user_id FROM " + userType + "\n" +
-                "WHERE user_id = " + id
+                    "SELECT user_id FROM " + userType + "\n" +
+                            "WHERE user_id = " + id
             );
 
             int userId = rs.getInt("user_id");
@@ -210,14 +210,14 @@ public class Controller {
     private Product getProductBySKU(int sku) {
         try {
             ResultSet rs = database.query("SELECT\n" +
-                "       sku,\n" +
-                "       count,\n" +
-                "       name,\n" +
-                "       description,\n" +
-                "       price,\n" +
-                "       category_name\n" +
-                "FROM product\n" +
-                "WHERE sku = " + sku
+                    "       sku,\n" +
+                    "       count,\n" +
+                    "       name,\n" +
+                    "       description,\n" +
+                    "       price,\n" +
+                    "       category_name\n" +
+                    "FROM product\n" +
+                    "WHERE sku = " + sku
             );
 
             int count = rs.getInt("count");
@@ -240,15 +240,15 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-            "SELECT\n" +
-                "       sku,\n" +
-                "       count,\n" +
-                "       name,\n" +
-                "       description,\n" +
-                "       price,\n" +
-                "       category_name\n" +
-                "FROM product\n" +
-                "WHERE category_name = '" + category_name.toLowerCase() + "'"
+                    "SELECT\n" +
+                            "       sku,\n" +
+                            "       count,\n" +
+                            "       name,\n" +
+                            "       description,\n" +
+                            "       price,\n" +
+                            "       category_name\n" +
+                            "FROM product\n" +
+                            "WHERE category_name = '" + category_name.toLowerCase() + "'"
             );
 
             while (rs.next()) {
@@ -276,9 +276,9 @@ public class Controller {
             ResultSet rs = database.query("SELECT seq FROM sqlite_sequence WHERE name = 'transactions'");
             int transaction_id = rs.getInt("seq");
 
-            for(Product product : products ) {
+            for (Product product : products) {
                 boolean success = createTransactionProduct(transaction_id, product, quantity);
-                if(!success) {
+                if (!success) {
                     System.out.println("Error creating transaction product");
                     return false;
                 }
@@ -306,13 +306,13 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-            "SELECT\n" +
-                "       transaction_id,\n" +
-                "       product_sku,\n" +
-                "       purchase_price,\n" +
-                "       quantity\n" +
-                "FROM transaction_product\n" +
-                "WHERE transaction_id = " + transactionId
+                    "SELECT\n" +
+                            "       transaction_id,\n" +
+                            "       product_sku,\n" +
+                            "       purchase_price,\n" +
+                            "       quantity\n" +
+                            "FROM transaction_product\n" +
+                            "WHERE transaction_id = " + transactionId
             );
 
             while (rs.next()) {
