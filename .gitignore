@@ -65,3 +65,7 @@ nb-configuration.xml
 ##########################
 .DS_Store
 *.MF
+
+!orderSysAdmin.jar
+!orderSysClient.jar
+
