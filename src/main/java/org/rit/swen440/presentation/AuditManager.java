@@ -1,6 +1,7 @@
 package org.rit.swen440.presentation;
 
 import org.rit.swen440.control.Controller;
+import org.rit.swen440.models.Product;
 import org.rit.swen440.models.Transaction;
 import org.rit.swen440.models.User;
 
@@ -119,8 +120,25 @@ public class AuditManager {
         Menu m = new Menu();
         String month = m.getSelection();
 
-        System.out.println(controller.getTopAndBottomSoldProducts(month));
-        System.out.println();
+        List<Product> products = controller.getTopAndBottomSoldProducts(month);
+
+        if (products.size() < 2) {
+            System.out.println("No transactions found between specified dates");
+            System.out.println("");
+            currentLevel = 0;
+            return;
+        }
+
+        int curr = products.get(0).getCount();
+        System.out.println("Top sellers of the month:");
+        for (Product product: products) {
+            if (product.getCount() < curr)
+                System.out.println("Bottom sellers of the month:");
+
+            System.out.println("    " + product.toString() + ": " + product.getCount());
+        }
+
+        System.out.println("");
 
         currentLevel = 0;
     }

@@ -67,7 +67,7 @@ public class Controller {
                 "  product_sku\n" +
                 "FROM transaction_product\n" +
                 "INNER JOIN transactions on transaction_id = id\n" +
-                "WHERE date_ordered LIKE '2018-12%'\n" +
+                "WHERE date_ordered LIKE '" + yearMonthDate + "%'\n" +
                 "GROUP BY product_sku\n" +
                 "ORDER BY amount_sold DESC"
             );
@@ -84,12 +84,15 @@ public class Controller {
             System.out.println(e.getMessage());
         }
 
-        int topSold = soldProducts.get(0).getCount();
-        int bottomSold = soldProducts.get(soldProducts.size()-1).getCount();
         List<Product> products = new ArrayList<>();
-        for (Product product: soldProducts) {
-            if (product.getCount() == topSold || product.getCount() == bottomSold)
-                products.add(product);
+
+        if (soldProducts.size() >= 2) {
+            int topSold = soldProducts.get(0).getCount();
+            int bottomSold = soldProducts.get(soldProducts.size() - 1).getCount();
+            for (Product product : soldProducts) {
+                if (product.getCount() == topSold || product.getCount() == bottomSold)
+                    products.add(product);
+            }
         }
 
         return products;

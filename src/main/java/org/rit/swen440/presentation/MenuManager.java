@@ -18,7 +18,6 @@ public class MenuManager {
 
     public MenuManager() {
         controller = new Controller();
-        System.out.println(controller.getTopAndBottomSoldProducts("2018-12"));
     }
 
     public boolean loadLevel() {
