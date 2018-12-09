@@ -179,18 +179,8 @@ public class Controller {
     }
 
     public boolean createTransactionProduct() {
-        try {
-            ResultSet rs = Database.query(
-                    "INSERT INTO transaction_product (transaction_id,product_sku,purchase_price,quantity)\n" +
-                            "VALUES (1,2,5.00,10)"
-            );
-
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
         return false;
+        //TODO
     }
 
     private List<TransactionProduct> getTransactionProductsByTransactionId(int transactionId) {
