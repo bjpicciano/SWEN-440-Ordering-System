@@ -33,6 +33,24 @@ public class Category {
         return categories;
     }
 
+    public static Category getCategoryByName(String name) {
+        try {
+            ResultSet rs = Database.query("SELECT description FROM category WHERE name = '" + name + "'");
+
+            String description = rs.getString("description");
+            rs.close();
+
+            return new Category(name, description);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public String toString() {
         return "Category{" +

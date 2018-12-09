@@ -1,6 +1,8 @@
 package org.rit.swen440.presentation;
 
 import org.rit.swen440.control.Controller;
+import org.rit.swen440.models.Category;
+import org.rit.swen440.models.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +74,15 @@ public class menumgr {
         menu m = new menu();
 
         //TODO Database: "SELECT * FROM product WHERE category_name = currentCategoryName"
-        List<String> itemList = controller.getProducts(currentCategoryName);
-        List<String> l = new ArrayList<>();
+        List<Product> productList = Product.getProductsInCategory(currentCategoryName);
+        List<String> itemList = new ArrayList<>();
 
+        List<String> l = new ArrayList<>();
+        for(Product product: productList){
+            itemList.add(product.toString());
+        }
+
+        //List<String> itemList = controller.getProducts(currentCategoryName);
         System.out.println("");
         for (String itm: itemList)
             l.add(controller.getProductInformation(currentCategoryName, itm, Controller.PRODUCT_FIELD.NAME)
