@@ -1,8 +1,6 @@
 package org.rit.swen440.presentation;
 
-import org.rit.swen440.control.Controller;
-import org.rit.swen440.models.Category;
-import org.rit.swen440.models.Product;
+import org.rit.swen440.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +11,11 @@ public class menumgr {
 
     private int currentLevel = 0;
     private String currentCategoryName;
-    private String currentItemName;
-    private Controller controller;
+    private User user;
 
     public menumgr() {
-        //TODO Database: Use New Controller Class
-        controller = new Controller(System.getProperty("fileSystemRoot"));
-
+        //TODO Database: Create User
+        user = new User();
     }
 
     public boolean loadLevel() {
@@ -44,7 +40,7 @@ public class menumgr {
 
     private void CategoryLevel() {
         menu m = new menu();
-        //TODO Database: "SELECT * FROM category"
+
         List<Category> categoriesList = Category.getAllCategories();
 
         List<String> categories = new ArrayList<>();
@@ -57,7 +53,7 @@ public class menumgr {
         m.addMenuItem("'q' to Quit"); 
         System.out.println("The following org.rit.swen440.presentation.categories are available");
         m.printMenu();
-        String result = "0";
+        String result;
         try {
             result = m.getSelection();
         }
@@ -79,7 +75,6 @@ public class menumgr {
     private void ItemLevel() {
         menu m = new menu();
 
-        //TODO Database: "SELECT * FROM product WHERE category_name = currentCategoryName"
         List<Product> productList = Product.getProductsInCategory(currentCategoryName);
         List<String> itemList = new ArrayList<>();
         Product currentProduct = null;
@@ -95,6 +90,7 @@ public class menumgr {
         System.out.println("The following items are available");
         m.printMenu();
         String result = m.getSelection();
+
         try {
             int iSel = Integer.parseInt(result); //Item selected
             currentProduct = productList.get(iSel);
@@ -123,8 +119,11 @@ public class menumgr {
         if (result > currentProduct.getCount()) {
             System.out.println("There are not that many available to order.");
         } else {
-            //TODO Database: "INSERT INTO transaction (uniqueId, currentDate, null, null, clientId)"
-            //TODO Database: "INSERT INTO transaction_product (uniqueId, product.sku, product.price, result"
+            TransactionProduct transactionProduct = new TransactionProduct(currentProduct, currentProduct.getPrice(), result);
+            List<TransactionProduct> transactionProducts = new ArrayList<TransactionProduct>();
+            transactionProducts.add(transactionProduct);
+
+            Transaction.createTransaction(user, transactionProducts);
 
             System.out.println("You ordered:" + result);
         }
