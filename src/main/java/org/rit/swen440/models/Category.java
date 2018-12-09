@@ -1,5 +1,6 @@
 package org.rit.swen440.models;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class Category {
 
     static List<Category> getAllCategories() {
         List<Category> categories = new ArrayList<>();
+
         return categories;
     }
 }

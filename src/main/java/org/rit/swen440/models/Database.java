@@ -7,52 +7,22 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Database {
-    private static Connection connection;
+    private static Connection getConnection() {
+        String url = "jdbc:sqlite:products.db"; // SQLite connection string
+        Connection connection = null;
 
-    public static Connection getConnection() {
-        if (connection == null) {
-            String url = "jdbc:sqlite:products.db"; // SQLite connection string
-            Connection conn = null;
-
-            try {
-                conn = DriverManager.getConnection(url);
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-
-            connection = conn;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
 
         return connection;
     }
 
-    public static void closeConnection() {
-        try {
-
-            if (connection != null) {
-                connection.close();
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public static void selectTest(java.sql.Connection conn){
-        String sql = "SELECT * FROM category";
-
-        try (Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)
-        ){
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(
-                        rs.getString("name") + "\t" +
-                                rs.getString("description")
-                );
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+    public static ResultSet query(String sql) throws SQLException {
+        Connection connection = getConnection();
+        Statement statement = connection.createStatement();
+        return statement.executeQuery(sql);
     }
 }
