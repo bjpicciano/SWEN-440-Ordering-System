@@ -7,9 +7,8 @@ public class menutest
 {
     public static void main(String[] args)
     {
-//        System.out.println(Transaction.getTransactionById(1));
         System.setProperty("fileSystemRoot", "./orderSys");
-        System.out.println("Hello");
+
         menumgr mgr = new menumgr();
         boolean done = false;
         do {

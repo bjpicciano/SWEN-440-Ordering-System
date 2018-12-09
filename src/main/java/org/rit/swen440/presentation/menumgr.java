@@ -9,13 +9,11 @@ import java.util.Objects;
 
 public class menumgr {
 
-    private int currentLevel = 0;
+    private int currentLevel = 2;
     private String currentCategoryName;
     private User user;
 
     public menumgr() {
-        //TODO Database: Create User
-        user = new User();
     }
 
     public boolean loadLevel() {
@@ -28,6 +26,9 @@ public class menumgr {
             case 1:
                 ItemLevel();
                 break;
+            case 2:
+                LoginLevel();
+                break;
             default:
                 System.out.println("Returning to main org.rit.swen440.presentation.menu");
                 currentLevel = 0;
@@ -36,6 +37,13 @@ public class menumgr {
         }
 
         return false;
+    }
+
+    private void LoginLevel() {
+        //TODO User Login
+        user = new User();
+
+        currentLevel = 0;
     }
 
     private void CategoryLevel() {
