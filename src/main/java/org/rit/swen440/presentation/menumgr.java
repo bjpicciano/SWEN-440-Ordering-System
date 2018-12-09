@@ -1,5 +1,6 @@
 package org.rit.swen440.presentation;
 
+import org.rit.swen440.control.Controller;
 import org.rit.swen440.models.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class menumgr {
     private int currentLevel = 2;
     private String currentCategoryName;
     private User user;
+
 
     public menumgr() {
     }
@@ -50,7 +52,7 @@ public class menumgr {
 
         //TODO User Login
         System.out.println("Logging in as " + email + " with password " + password);
-        //user = User.login(username, password);
+        //user = Controller.login(username, password);
 
         currentLevel = 0;
     }
@@ -58,7 +60,7 @@ public class menumgr {
     private void CategoryLevel() {
         menu m = new menu();
 
-        List<Category> categoriesList = Category.getAllCategories();
+        List<Category> categoriesList = Controller.getAllCategories();
 
         List<String> categories = new ArrayList<>();
         for(Category category: categoriesList){
@@ -92,7 +94,7 @@ public class menumgr {
     private void ItemLevel() {
         menu m = new menu();
 
-        List<Product> productList = Product.getProductsInCategory(currentCategoryName);
+        List<Product> productList = Controller.getProductsInCategory(currentCategoryName);
         List<String> itemList = new ArrayList<>();
         Product currentProduct = null;
 
@@ -100,8 +102,7 @@ public class menumgr {
             itemList.add(product.toString());
         }
 
-        System.out.println("");
-
+        System.out.println();
         m.loadMenu(itemList);
         m.addMenuItem("'q' to Quit");
         System.out.println("The following items are available");
@@ -136,11 +137,10 @@ public class menumgr {
         if (result > currentProduct.getCount()) {
             System.out.println("There are not that many available to order.");
         } else {
-            TransactionProduct transactionProduct = new TransactionProduct(currentProduct, currentProduct.getPrice(), result);
-            List<TransactionProduct> transactionProducts = new ArrayList<TransactionProduct>();
-            transactionProducts.add(transactionProduct);
+            List<Product> products = new ArrayList<>();
+            products.add(currentProduct);
 
-            Transaction.createTransaction(user, transactionProducts);
+            Controller.createTransaction(user, products);
 
             System.out.println("You ordered:" + result);
         }
