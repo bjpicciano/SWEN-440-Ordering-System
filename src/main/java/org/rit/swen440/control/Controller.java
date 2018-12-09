@@ -260,6 +260,7 @@ public class Controller {
     private boolean createTransactionProduct(int transaction_id, Product product, int quantity) {
         try {
             database.insertTransactionProduct(transaction_id, product.getSku(), product.getPrice(), quantity);
+            database.updateCount(product.getSku(), quantity);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
