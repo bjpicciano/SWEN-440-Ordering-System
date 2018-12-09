@@ -1,22 +1,11 @@
 package org.rit.swen440.control;
 
-import org.rit.swen440.dataLayer.Category;
-import org.rit.swen440.dataLayer.Product;
-import org.rit.swen440.models.Transaction;
-import org.rit.swen440.models.TransactionProduct;
-import org.rit.swen440.models.User;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.charset.Charset;
-import java.nio.file.*;
+import org.rit.swen440.models.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Controls access to data, on start-up scans directories and builds internal
