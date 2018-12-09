@@ -146,14 +146,15 @@ public class Controller {
     public Product getProductBySKU(int sku) {
         try {
             ResultSet rs = database.query("SELECT\n" +
-                    "       sku,\n" +
-                    "       count,\n" +
-                    "       name,\n" +
-                    "       description,\n" +
-                    "       price,\n" +
-                    "       category_name\n" +
-                    "FROM product\n" +
-                    "WHERE sku = " + sku);
+                "       sku,\n" +
+                "       count,\n" +
+                "       name,\n" +
+                "       description,\n" +
+                "       price,\n" +
+                "       category_name\n" +
+                "FROM product\n" +
+                "WHERE sku = " + sku
+            );
 
             int count = rs.getInt("count");
             String name = rs.getString("name");
@@ -181,15 +182,16 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-                    "SELECT\n" +
-                            "       sku,\n" +
-                            "       count,\n" +
-                            "       name,\n" +
-                            "       description,\n" +
-                            "       price,\n" +
-                            "       category_name\n" +
-                            "FROM product\n" +
-                            "WHERE category_name = '" + category_name.toLowerCase() + "'");
+            "SELECT\n" +
+                "       sku,\n" +
+                "       count,\n" +
+                "       name,\n" +
+                "       description,\n" +
+                "       price,\n" +
+                "       category_name\n" +
+                "FROM product\n" +
+                "WHERE category_name = '" + category_name.toLowerCase() + "'"
+            );
 
             while (rs.next()) {
                 int sku = rs.getInt("sku");
@@ -220,14 +222,15 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-                    "SELECT\n" +
-                            "       id,\n" +
-                            "       date_ordered,\n" +
-                            "       date_shipped,\n" +
-                            "       date_received,\n" +
-                            "       user_id\n" +
-                            "FROM transactions\n" +
-                            "WHERE id = " + id);
+            "SELECT\n" +
+                "       id,\n" +
+                "       date_ordered,\n" +
+                "       date_shipped,\n" +
+                "       date_received,\n" +
+                "       user_id\n" +
+                "FROM transactions\n" +
+                "WHERE id = " + id
+            );
 
             String dateOrdered = rs.getString("date_ordered");
             String dateShipped = rs.getString("date_shipped");
@@ -255,13 +258,13 @@ public class Controller {
 
         try {
             ResultSet rs = database.query(
-                    "SELECT\n" +
-                            "       transaction_id,\n" +
-                            "       product_sku,\n" +
-                            "       purchase_price,\n" +
-                            "       quantity\n" +
-                            "FROM transaction_product\n" +
-                            "WHERE transaction_id = " + transactionId
+            "SELECT\n" +
+                "       transaction_id,\n" +
+                "       product_sku,\n" +
+                "       purchase_price,\n" +
+                "       quantity\n" +
+                "FROM transaction_product\n" +
+                "WHERE transaction_id = " + transactionId
             );
             while (rs.next()) {
                 int sku = rs.getInt("product_sku");
