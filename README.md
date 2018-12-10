@@ -1,28 +1,13 @@
-# SWEN-440:  Project 2
+# SWEN-440: Online Ordering System
 Fall 2018
 
-## Online Ordering System
-
 ### Overview:
-
 The system consists of three main components:  a command line order 
-entry module, a central processing module and a data storage module. 
+entry module, a controller module and a database. 
  
- - The order entry module handles all communication with the user
- - The data storage module handles all communication with the underlying 
-   file system.  
- - The central processing system coordinates the activities across 
-   the system taking requests from the order entry module and
-   interacting with the data storage layer to fulfill the request.
-   
-## Architecture
-A key component of understanding and extending the **Online Ordering System** 
-is its architecture.  Management expects each team to fully document
-the architecture and how they plan to extend it.  Components to consider in
-developing the architecture documentation are the key drivers, the
-_Architectually Significant Requirements_ the team is addressing, the
-architecture itself, and how the chosen architecture addresses the
-drivers.  
+ - The order entry module handles all communication with the user.
+ - The controller module handles all communication with the database.  
+ - The database stores all product and transaction data.
    
 ## Development
 The **Online Ordering System** was developed using the Java language. The
@@ -34,26 +19,11 @@ The product.db file changes are not tracked in git because of:
 Use this command to track again  
 ```git update-index --no-skip-worktree <file>```
 
-### Coding Style
-The management team _fired_ the last set of architects and developers because they could
-not agree on architectural direction or coding styles and conventions. This
-inability has led to a slightly brittle system that is at risk of falling behind its
-primary competitor, that South American company, Amazon.   
-
-The management team strongly believes that consistency in coding will yield a better result
-and a better final grade.
-
 ### Dependencies
- - Java 8 : Refactoring work done over the life of the ordering system has
- resulted in dependencies on newer versions of Java.  Currently, streams
- and lambda expressions are used.  
- 
-    The customer is open to upgrading to newer Java versions if the architecture
-    team identifies functionality that would enhance functionality of the
-    system or readability of the resulting code.
- - Lombok Library: Lombok annotations are used in places to auto-generate getters and
- setters.  
- - JUnit Library:  Included but never used.
+ - Java 8: Refactoring work done over the life of the ordering system has
+ resulted in dependencies on newer versions of Java.
+ - JDBC: Handles communication to SQLite database.
+ - JUnit Library: Handles controller unit tests.
 
 ### Building
 The development team choose Maven as their build tool.  Maven 3.1.0 and 3.3.9
@@ -63,34 +33,40 @@ With Maven installed, running **mvn clean install** from the root install direct
 successfully build the program.  It is expected that every build will also execute the test
 lifecycle ensuring that unit tests all still pass.
 
+###### Build Instructions
+1. Open the project in IntelliJ
+2. Click “File”, then “Save All”
+3. Run class with main method
+4. Click “File”, then “Project Structure”
+5. Select Tab "Artifacts"
+6. Click plus button near top of window.
+7. Select JAR from Add drop down menu
+8. Select "From modules with dependencies"
+9. Choose the main class:
+    1. If you want the client’s ordering interface Select “MenuMain”
+    2. If you want the admin audit interface Select “AuditMain”
+10. The radio button should be selecting "extract to the target JAR" 
+11. Click OK
+12. Depending on your main class:
+    1. If you chose “MenuMain” change Name to “orderSysClient”
+    2. If you chose “AuditMain” change Name to “orderSysAdmin”
+13. Change the output directory to the project root folder ex: “...\SWEN-440-Ordering-System\”
+14. Press apply and OK
+15. In the top menu click “Build”
+16. Select the option “Build Artifacts”
+
 ### Testing
-The development team pushed developing unit tests to the
- end of their development cycle.  As is often the case, this was a poor
- decision.  Time was never allocated and no tests were written.
- 
-The stakeholders have high hopes that the new _Crack Teams_ taking over
-the project have a better sense of the importance of unit testing
-and deliver code with good unit tests and high coverage.  
+JUnit tests were made for public methods in the Controller class.
+These are a basic coverage of the system's functionality.
 
 ## Running the Online Ordering System
-The previous team left no written instructions on how to run the system, other than it appears the main app runs via menutest.
-Management sincerely hopes the new teams understand the importance of good
-documentation and provide this critical piece of information.
+1. To run the client’s ordering system click “run_client.bat”
+2. To run the admin’s audit system click “run_admin.bat”
 
-**It should be noted that a large part of the compensation for working on
-this project is dependent on the management team being able to evaluate it.
-A key part of evaluation will be installing, building and running the 
-system you produce.
-Additionally, explaining architecture choices going forward is essential.**
-
-### Test Users
+###### Test Users
 ```
-Client 1:
+Client:
  - Email: client@oos.com
- - Password: 123
- 
-Client 2:
- - Email: client2@oos.com
  - Password: 123
  
 Admin
