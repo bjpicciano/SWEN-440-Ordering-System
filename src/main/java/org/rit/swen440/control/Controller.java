@@ -34,7 +34,7 @@ public class Controller {
                             "       date_received,\n" +
                             "       user_id\n" +
                             "FROM transactions\n" +
-                            "WHERE DATE(date_shipped) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')"
+                            "WHERE DATE(date_ordered) BETWEEN DATE('" + startDate + "') AND DATE('" + endDate + "')"
             );
 
             while (rs.next()) {
